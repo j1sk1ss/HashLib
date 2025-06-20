@@ -2,6 +2,20 @@ mod hash;
 mod ripemd160;
 mod tigerhash;
 
+#[derive(Copy, Clone)]
+pub enum Hasher {
+    RIPEMD160, TIGERHASH
+}
+
+pub use hash::Hash;
+pub fn digest(hasher: Hasher) -> Option<fn(&[u8]) -> hash::Hash> {
+    match hasher {
+        Hasher::RIPEMD160 => Some(ripemd160::hash),
+        Hasher::TIGERHASH => Some(tigerhash::hash),
+        _ => None,
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

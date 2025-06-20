@@ -1,3 +1,4 @@
+#[derive(Clone)]
 pub struct Hash {
     body: Vec<u8>
 }
@@ -21,11 +22,19 @@ impl Hash {
         };
     }
 
+    pub fn equals(&self, hash: &Hash) -> bool {
+        return self.body == hash.body;
+    }
+
     pub fn concat(&self, hash: &Hash) -> Hash {
         let mut result: Hash = Hash::new(0);
         result.body.extend(&self.body);
         result.body.extend(&hash.body);
         return result;
+    }
+
+    pub fn to_bytes(&self) -> &[u8] {
+        return &self.body;
     }
 
     pub fn to_string(&self) -> String {
