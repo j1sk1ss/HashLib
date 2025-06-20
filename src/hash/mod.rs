@@ -9,6 +9,12 @@ impl Hash {
         };
     }
 
+    pub fn from_vec(data: Vec<u8>) -> Hash {
+        return Hash {
+            body: data
+        };
+    }
+
     pub fn from_array(data: &[u8]) -> Hash {
         return Hash {
             body: data.to_vec()
