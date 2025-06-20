@@ -22,6 +22,10 @@ impl Hash {
         };
     }
 
+    pub fn from_string(data: &str) -> Hash {
+        return Hash::new(data.len());
+    }
+
     pub fn equals(&self, hash: &Hash) -> bool {
         return self.body == hash.body;
     }
@@ -40,4 +44,9 @@ impl Hash {
     pub fn to_string(&self) -> String {
         return self.body.iter().map(|b| format!("{:02x}", b)).collect::<String>();
     }
+}
+
+pub trait Hasher {
+    fn new() -> Self;
+    fn hash(&self, data: &[u8]) -> Hash;
 }
