@@ -1,35 +1,30 @@
 use crate::hash;
 mod sboxes;
 
-fn round(a: &mut u64, b: &mut u64, c: &mut u64, x: u64) -> () {
+fn round(a: &mut u64, b: &mut u64, c: &mut u64, x: u64, mul: u64) -> () {
     *c ^= x;
-    
-    let c_val = *c;
     *a = a.wrapping_sub(
-        sboxes::T1[(c_val & 0xFF) as usize] 
-        ^ sboxes::T2[((c_val >> 16) & 0xFF) as usize] 
-        ^ sboxes::T3[((c_val >> 32) & 0xFF) as usize] 
-        ^ sboxes::T4[((c_val >> 48) & 0xFF) as usize]
+        sboxes::T1[(*c & 0xFF) as usize] ^ sboxes::T2[((*c >> 16) & 0xFF) as usize] 
+        ^ sboxes::T3[((*c >> 32) & 0xFF) as usize] ^ sboxes::T4[((*c >> 48) & 0xFF) as usize]
     );
 
     *b = b.wrapping_add(
-        sboxes::T4[((c_val >> 8) & 0xFF) as usize] 
-        ^ sboxes::T3[((c_val >> 24) & 0xFF) as usize] 
-        ^ sboxes::T2[((c_val >> 40) & 0xFF) as usize] 
-        ^ sboxes::T1[((c_val >> 56) & 0xFF) as usize]
+        sboxes::T4[((*c >> 8) & 0xFF) as usize] ^ sboxes::T3[((*c >> 24) & 0xFF) as usize] 
+        ^ sboxes::T2[((*c >> 40) & 0xFF) as usize] ^ sboxes::T1[((*c >> 56) & 0xFF) as usize]
     );
+
+    *b = b.wrapping_mul(mul);
 }
 
 fn pass(a: &mut u64, b: &mut u64, c: &mut u64, x: &[u64], mul: u8) -> () {
-    round(a, b, c, x[0]);
-    round(b, c, a, x[1]);
-    round(c, a, b, x[2]);
-    round(a, b, c, x[3]);
-    round(b, c, a, x[4]);
-    round(c, a, b, x[5]);
-    round(a, b, c, x[6]);
-    round(b, c, a, x[7]);
-    *b = b.wrapping_mul(mul as u64);
+    round(a, b, c, x[0], mul as u64);
+    round(b, c, a, x[1], mul as u64);
+    round(c, a, b, x[2], mul as u64);
+    round(a, b, c, x[3], mul as u64);
+    round(b, c, a, x[4], mul as u64);
+    round(c, a, b, x[5], mul as u64);
+    round(a, b, c, x[6], mul as u64);
+    round(b, c, a, x[7], mul as u64);
 }
 
 fn key_schedule(x: &mut [u64]) -> () {
@@ -66,6 +61,7 @@ impl hash::Hasher for TigerHash {
     }
     
     fn hash(&self, data: &[u8]) -> hash::Hash {
+        /* Initialization of tiger context */
         let mut a: u64 = 0x0123456789ABCDEF;
         let mut b: u64 = 0xFEDCBA9876543210;
         let mut c: u64 = 0xF096A5B4C3B2E187;
@@ -81,7 +77,6 @@ impl hash::Hasher for TigerHash {
         message.extend_from_slice(&original_bit_len.to_le_bytes());
         
         let mut x: [u64; 8] = [0u64; 8];
-    
         for chunk in message.chunks_exact(64) {
             for (i, word_bytes) in chunk.chunks_exact(8).enumerate() {
                 x[i] = u64::from_le_bytes(word_bytes.try_into().unwrap());
