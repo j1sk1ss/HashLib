@@ -3,6 +3,7 @@ mod hash;
 /* Hash functions */
 mod md5;
 mod sha3;
+mod blake2b;
 mod ripemd160;
 mod tigerhash;
 

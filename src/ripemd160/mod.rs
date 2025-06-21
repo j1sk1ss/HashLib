@@ -109,6 +109,7 @@ mod tests {
 
     #[test]
     fn string_tests() -> () {
+        /* https://emn178.github.io/online-tools/ripemd-160/ */
         assert_eq!(get_hash_from_string("Hello world"), "dbea7bd24eef40a2e79387542e36dd408b77b21a");
         assert_eq!(get_hash_from_string("Goodbye!"),    "190a1a00ee63e9ce4761431ddb8987b220838f80");
         assert_eq!(get_hash_from_string("America8765"), "5adc24ec117a842a7c3b32952f7e0cf01f7d3ed2");

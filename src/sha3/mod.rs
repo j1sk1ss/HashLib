@@ -103,6 +103,7 @@ mod tests {
 
     #[test]
     fn string_tests() -> () {
+        /* https://emn178.github.io/online-tools/sha3_256.html */
         assert_eq!(get_hash_from_string("Hello world"), "369183d3786773cef4e56c7b849e7ef5f742867510b676d6b38f8e38a222d8a2");
         assert_eq!(get_hash_from_string("Goodbye!"),    "db10b44f8d065b9675bc2f672999e3dbbd6fd1e0bca19bb441258391f2b67e6a");
         assert_eq!(get_hash_from_string("America8765"), "6712b740c03481dfa38d6193fb27896508e1fced868abddaa9ccecbc0f068aaa");

@@ -130,6 +130,7 @@ mod tests {
 
     #[test]
     fn string_tests() -> () {
+        /* https://www.miraclesalad.com/webtools/md5.php */
         assert_eq!(get_hash_from_string("Hello world"), "3e25960a79dbc69b674cd4ec67a72c62");
         assert_eq!(get_hash_from_string("Goodbye!"),    "1f3f6dc2b268921e89d5d88b202e6ff0");
         assert_eq!(get_hash_from_string("America8765"), "3d6ff88ebb2e7bd6a62940ca4f8659c2");

@@ -136,6 +136,7 @@ mod tests {
 
     #[test]
     fn string_tests() -> () {
+        /* https://www.convertcase.com/hashing/tiger-hash-calculator */
         assert_eq!(get_hash_from_string("Hello world"), "1f5d29e51fb59e6247561e19a0e593dac8330180322881c4");
         assert_eq!(get_hash_from_string("Goodbye!"),    "68538d2d70371675b368769760e4025869e7682f0fdf8302");
         assert_eq!(get_hash_from_string("America8765"), "c6ed8fc90913aea078ede779163a773180bbb818520ca0be");
