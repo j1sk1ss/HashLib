@@ -112,3 +112,47 @@ impl hash::Hasher for Ripemd160 {
         return hash::Hash::from_array(&result);
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::hash::Hasher;
+
+    fn get_hasher() -> Ripemd160 {
+        return Ripemd160::new();
+    }
+
+    fn get_hash_from_string(msg: &str) -> String {
+        return get_hasher().hash(msg.as_bytes()).to_string();
+    }
+    
+    fn get_hash_from_u128(data: u128) -> String {
+        return get_hasher().hash(&data.to_le_bytes()).to_string();
+    }
+    
+    fn get_hash_from_u8arr(data: &[u8]) -> String {
+        return get_hasher().hash(data).to_string();
+    }    
+
+    #[test]
+    fn string_tests() -> () {
+        assert_eq!(get_hash_from_string("Hello world"), "dbea7bd24eef40a2e79387542e36dd408b77b21a");
+        assert_eq!(get_hash_from_string("Goodbye!"),    "190a1a00ee63e9ce4761431ddb8987b220838f80");
+        assert_eq!(get_hash_from_string("America8765"), "5adc24ec117a842a7c3b32952f7e0cf01f7d3ed2");
+        assert_eq!(get_hash_from_string(" "),           "ac53a3aea6835b5ec12054e12d41d392e9d57b72");
+    }
+
+    #[test]
+    fn u128_test() -> () {
+        assert_eq!(get_hash_from_u128(98234892934), ""); /* TODO */
+        assert_eq!(get_hash_from_u128(94304995884), "");
+        assert_eq!(get_hash_from_u128(0),           "");
+    }
+
+    #[test]
+    fn u8arr_tests() -> () {
+        assert_eq!(get_hash_from_u8arr(&[0, 1, 2, 98, 74]),  "");  /* TODO */
+        assert_eq!(get_hash_from_u8arr(&[8, 92, 0xA]),       "");
+        assert_eq!(get_hash_from_u8arr(&[0, 0, 0, 0, 0, 0]), "");
+    }
+}

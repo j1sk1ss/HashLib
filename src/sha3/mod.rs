@@ -1,3 +1,7 @@
+/*
+SHA-3, 256bit hash function.
+*/
+
 use crate::hash;
 mod misc;
 
@@ -73,5 +77,49 @@ impl hash::Hasher for SHA3 {
         let mut ctx: Sha3ctx = Sha3ctx::new();
         ctx.absorb(data);
         return hash::Hash::from_array(&ctx.finalize());
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::hash::Hasher;
+
+    fn get_hasher() -> SHA3 {
+        return SHA3::new();
+    }
+
+    fn get_hash_from_string(msg: &str) -> String {
+        return get_hasher().hash(msg.as_bytes()).to_string();
+    }
+    
+    fn get_hash_from_u128(data: u128) -> String {
+        return get_hasher().hash(&data.to_le_bytes()).to_string();
+    }
+    
+    fn get_hash_from_u8arr(data: &[u8]) -> String {
+        return get_hasher().hash(data).to_string();
+    }    
+
+    #[test]
+    fn string_tests() -> () {
+        assert_eq!(get_hash_from_string("Hello world"), "369183d3786773cef4e56c7b849e7ef5f742867510b676d6b38f8e38a222d8a2");
+        assert_eq!(get_hash_from_string("Goodbye!"),    "db10b44f8d065b9675bc2f672999e3dbbd6fd1e0bca19bb441258391f2b67e6a");
+        assert_eq!(get_hash_from_string("America8765"), "6712b740c03481dfa38d6193fb27896508e1fced868abddaa9ccecbc0f068aaa");
+        assert_eq!(get_hash_from_string(" "),           "60e893e6d54d8526e55a81f98bfac5da236bb203e84ed5967a8f527d5bf3d4a4");
+    }
+
+    #[test]
+    fn u128_test() -> () {
+        assert_eq!(get_hash_from_u128(98234892934), ""); /* TODO */
+        assert_eq!(get_hash_from_u128(94304995884), "");
+        assert_eq!(get_hash_from_u128(0),           "");
+    }
+
+    #[test]
+    fn u8arr_tests() -> () {
+        assert_eq!(get_hash_from_u8arr(&[0, 1, 2, 98, 74]),  "");  /* TODO */
+        assert_eq!(get_hash_from_u8arr(&[8, 92, 0xA]),       "");
+        assert_eq!(get_hash_from_u8arr(&[0, 0, 0, 0, 0, 0]), "");
     }
 }

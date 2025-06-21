@@ -1,3 +1,11 @@
+/*
+TigerHash 192,3 hash function.
+Based on Ross Anderson and Eli Biham "Tiger: A Fast New Hash Function".
+Also:
+https://github.com/rhash/RHash/blob/master/librhash/tiger.c
+https://github.com/Kumokage/TigerHash
+*/
+
 use crate::hash;
 mod sboxes;
 
@@ -102,5 +110,49 @@ impl hash::Hasher for TigerHash {
         result_bytes.extend_from_slice(&c.to_le_bytes());
         
         return hash::Hash::from_vec(result_bytes);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::hash::Hasher;
+
+    fn get_hasher() -> TigerHash {
+        return TigerHash::new();
+    }
+
+    fn get_hash_from_string(msg: &str) -> String {
+        return get_hasher().hash(msg.as_bytes()).to_string();
+    }
+    
+    fn get_hash_from_u128(data: u128) -> String {
+        return get_hasher().hash(&data.to_le_bytes()).to_string();
+    }
+    
+    fn get_hash_from_u8arr(data: &[u8]) -> String {
+        return get_hasher().hash(data).to_string();
+    }    
+
+    #[test]
+    fn string_tests() -> () {
+        assert_eq!(get_hash_from_string("Hello world"), "1f5d29e51fb59e6247561e19a0e593dac8330180322881c4");
+        assert_eq!(get_hash_from_string("Goodbye!"),    "68538d2d70371675b368769760e4025869e7682f0fdf8302");
+        assert_eq!(get_hash_from_string("America8765"), "c6ed8fc90913aea078ede779163a773180bbb818520ca0be");
+        assert_eq!(get_hash_from_string(" "),           "f0aefd02e2ad9fd927a4cba375399f7d8bf42e5a377e9fb1");
+    }
+
+    #[test]
+    fn u128_test() -> () {
+        assert_eq!(get_hash_from_u128(98234892934), ""); /* TODO */
+        assert_eq!(get_hash_from_u128(94304995884), "");
+        assert_eq!(get_hash_from_u128(0),           "");
+    }
+
+    #[test]
+    fn u8arr_tests() -> () {
+        assert_eq!(get_hash_from_u8arr(&[0, 1, 2, 98, 74]),  "");  /* TODO */
+        assert_eq!(get_hash_from_u8arr(&[8, 92, 0xA]),       "");
+        assert_eq!(get_hash_from_u8arr(&[0, 0, 0, 0, 0, 0]), "");
     }
 }
