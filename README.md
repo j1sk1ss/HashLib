@@ -3,4 +3,4 @@ TODO:
 - SHA3,256
 - Blake2
 - Blake2b
-- MD5
+- MD5 [V]
