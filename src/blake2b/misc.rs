@@ -51,7 +51,7 @@ pub fn store32(dst: &mut [u8], w: u32) -> () {
 }
 
 #[inline]
-pub fn G(v: &mut [u64; 16], a: usize, b: usize, c: usize, d: usize, x: u64, y: u64) -> () {
+pub fn g(v: &mut [u64; 16], a: usize, b: usize, c: usize, d: usize, x: u64, y: u64) -> () {
     v[a] = v[a].wrapping_add(v[b]).wrapping_add(x);
     v[d] = (v[d] ^ v[a]).rotate_right(32);
 

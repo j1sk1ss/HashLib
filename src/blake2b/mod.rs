@@ -84,14 +84,14 @@ impl Blake2bContext {
 
         for i in 0..12 {
             let s: [usize; 16] = misc::BLAKE2B_SIGMA[i];
-            misc::G(&mut v, 0, 4, 8, 12, m[s[0]], m[s[1]]);
-            misc::G(&mut v, 1, 5, 9, 13, m[s[2]], m[s[3]]);
-            misc::G(&mut v, 2, 6, 10, 14, m[s[4]], m[s[5]]);
-            misc::G(&mut v, 3, 7, 11, 15, m[s[6]], m[s[7]]);
-            misc::G(&mut v, 0, 5, 10, 15, m[s[8]], m[s[9]]);
-            misc::G(&mut v, 1, 6, 11, 12, m[s[10]], m[s[11]]);
-            misc::G(&mut v, 2, 7, 8, 13, m[s[12]], m[s[13]]);
-            misc::G(&mut v, 3, 4, 9, 14, m[s[14]], m[s[15]]);
+            misc::g(&mut v, 0, 4, 8, 12, m[s[0]], m[s[1]]);
+            misc::g(&mut v, 1, 5, 9, 13, m[s[2]], m[s[3]]);
+            misc::g(&mut v, 2, 6, 10, 14, m[s[4]], m[s[5]]);
+            misc::g(&mut v, 3, 7, 11, 15, m[s[6]], m[s[7]]);
+            misc::g(&mut v, 0, 5, 10, 15, m[s[8]], m[s[9]]);
+            misc::g(&mut v, 1, 6, 11, 12, m[s[10]], m[s[11]]);
+            misc::g(&mut v, 2, 7, 8, 13, m[s[12]], m[s[13]]);
+            misc::g(&mut v, 3, 4, 9, 14, m[s[14]], m[s[15]]);
         }
 
         for i in 0..8 {
