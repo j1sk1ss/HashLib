@@ -49,18 +49,24 @@ impl Sha3ctx {
 
     fn finalize(&mut self) -> [u8; 32] {
         self.buffer[self.buff_size] = 0x06;
-        for i in (self.buff_size + 1)..135 {
+        for i in (self.buff_size + 1)..136 {
             self.buffer[i] = 0;
         }
 
         self.buffer[135] |= 0x80;
         self.absorb_block();
         misc::keccak_f(&mut self.state);
-
+    
         let mut hash: [u8; 32] = [0u8; 32];
-        for i in 0..4 {
-            hash[i * 8..(i + 1) * 8].copy_from_slice(&self.state[i % 5][i / 5].to_be_bytes());
-        }        
+        let mut index = 0;
+        for y in 0..5 {
+            for x in 0..5 {
+                if index >= 4 { break; }
+                let word = self.state[x][y].to_le_bytes();
+                hash[index * 8..(index + 1) * 8].copy_from_slice(&word);
+                index += 1;
+            }
+        }
 
         return hash;
     }
