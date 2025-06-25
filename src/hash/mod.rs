@@ -54,8 +54,9 @@ impl Hash {
     }
 }
 
-pub trait Hashable {
+pub trait Hashable: Clone {
     fn default() -> Self;
+    fn get_id(&self) -> usize;
     fn to_bytes(&self) -> Vec<u8>;
 }
 
