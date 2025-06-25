@@ -146,5 +146,3 @@ Blake2b, SHA3-256, SHA-512, Tiger192,3, and RIPEMD-160.
 - **Government Systems**: SHA3-256 or SHA-512
 - **Legacy Systems**: SHA-512
 - **Resource-constrained**: Blake2b
-
-> **Warning**: Tiger192,3 is not recommended for new systems due to limited security analysis
