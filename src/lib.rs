@@ -1,13 +1,13 @@
-mod hash;
-
+/* lib.rs */
 /* Hash functions */
-mod md5;
-mod sha3;
-mod sha512;
-mod blake2b;
-mod ripemd160;
-mod tigerhash;
+pub mod md5;
+pub mod sha3;
+pub mod sha512;
+pub mod blake2b;
+pub mod ripemd160;
+pub mod tigerhash;
 
-/* Hasher trait and hash abstraction */
-pub use hash::Hash;
-pub use hash::Hasher;
+/* Main hash abstraction module */
+mod hash;
+pub use hash::{Hash, Hasher, Hashable};
+

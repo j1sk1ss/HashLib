@@ -1,24 +1,28 @@
 #[derive(Clone)]
 pub struct Hash {
+    hashed: bool,
     body: Vec<u8>
 }
 
 impl Hash {
     pub fn new(size: usize) -> Hash {
         return Hash {
-            body: vec![0u8; size]
+            hashed: false,
+            body:   vec![0u8; size]
         };
     }
 
     pub fn from_vec(data: Vec<u8>) -> Hash {
         return Hash {
-            body: data
+            hashed: true,
+            body:   data
         };
     }
 
     pub fn from_array(data: &[u8]) -> Hash {
         return Hash {
-            body: data.to_vec()
+            hashed: true,
+            body:   data.to_vec()
         };
     }
 
@@ -44,6 +48,15 @@ impl Hash {
     pub fn to_string(&self) -> String {
         return self.body.iter().map(|b| format!("{:02x}", b)).collect::<String>();
     }
+
+    pub fn is_hashed(&self) -> bool {
+        return self.hashed;
+    }
+}
+
+pub trait Hashable {
+    fn default() -> Self;
+    fn to_bytes(&self) -> Vec<u8>;
 }
 
 pub trait Hasher {

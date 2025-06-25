@@ -28,11 +28,6 @@ pub static BLAKE2B_SIGMA: [[usize; 16]; 12] = [
 ];
 
 #[inline]
-pub fn rotr64(w: u64, c: u32) -> u64 {
-    return w.rotate_right(c);
-}
-
-#[inline]
 pub fn load64(src: &[u8]) -> u64 {
     debug_assert!(src.len() >= 8);
     return u64::from_le_bytes(src[0..8].try_into().unwrap());
@@ -42,12 +37,6 @@ pub fn load64(src: &[u8]) -> u64 {
 pub fn store64(dst: &mut [u8], w: u64) -> () {
     debug_assert!(dst.len() >= 8);
     dst[0..8].copy_from_slice(&w.to_le_bytes());
-}
-
-#[inline]
-pub fn store32(dst: &mut [u8], w: u32) -> () {
-    debug_assert!(dst.len() >= 4);
-    dst[0..4].copy_from_slice(&w.to_le_bytes());
 }
 
 #[inline]
