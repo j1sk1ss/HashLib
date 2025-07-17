@@ -1,4 +1,10 @@
 /* lib.rs */
+/* Checksum generators */
+pub mod crc16;
+pub mod crc32;
+pub mod crc64;
+pub mod xx_hash64;
+
 /* Hash functions */
 pub mod md5;
 pub mod sha3;
