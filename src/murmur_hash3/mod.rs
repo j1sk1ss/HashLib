@@ -1,4 +1,4 @@
-// https://github.com/easyaspi314/xxhash-clean/blob/master/xxhash64-ref.c
+// https://github.com/PeterScott/murmur3/blob/master/murmur3.c
 use crate::hash;
 
 pub struct MurMurHash3 {
