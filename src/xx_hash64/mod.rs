@@ -142,7 +142,9 @@ mod tests {
     use crate::hash::Hasher;
 
     fn get_hasher() -> XXHash64 {
-        return XXHash64::new();
+        let mut hasher: XXHash64 = XXHash64::new();
+        hasher.set_seed(0);
+        return hasher;
     }
 
     fn get_hash_from_string(msg: &str) -> String {
