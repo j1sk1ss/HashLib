@@ -1,5 +1,6 @@
 /* CRC-16/IBM-3740 */
 use crate::hash;
+mod misc;
 
 pub struct CRC16;
 
@@ -10,21 +11,13 @@ impl hash::Hasher for CRC16 {
 
     fn hash(&self, data: &[u8]) -> hash::Hash {
         let mut crc: u16 = 0xFFFF;
-        let poly: u16 = 0x1021;
 
         for &byte in data {
-            crc ^= (byte as u16) << 8;
-            for _ in 0..8 {
-                if (crc & 0x8000) != 0 {
-                    crc = (crc << 1) ^ poly;
-                } 
-                else {
-                    crc <<= 1;
-                }
-            }
+            let idx = ((crc >> 8) ^ byte as u16) as usize;
+            crc = (crc << 8) ^ misc::CRC16_TABLE[idx];
         }
 
-        let mut result: [u8; 2] = [0u8; 2];
+        let mut result = [0u8; 2];
         result[0] = (crc >> 8) as u8;
         result[1] = (crc & 0xFF) as u8;
         return hash::Hash::from_array(&result);
