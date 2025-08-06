@@ -84,6 +84,10 @@ impl hash::Hasher for Ripemd160 {
     
         return hash::Hash::from_array(&result);
     }
+
+    fn name(&self) -> String {
+        return "ripemd160".to_string();
+    }
 }
 
 #[cfg(test)]

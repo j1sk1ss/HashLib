@@ -23,6 +23,10 @@ impl hash::Hasher for CRC32 {
         result[3] = (final_crc & 0xFF) as u8;
         return hash::Hash::from_array(&result);
     }
+
+    fn name(&self) -> String {
+        return "crc32".to_string();
+    }
 }
 
 #[cfg(test)]

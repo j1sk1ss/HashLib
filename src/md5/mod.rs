@@ -105,6 +105,10 @@ impl hash::Hasher for MD5 {
         context.finalize();
         return hash::Hash::from_array(&context.digest);
     }
+
+    fn name(&self) -> String {
+        return "md5".to_string();
+    }
 }
 
 #[cfg(test)]

@@ -1,3 +1,5 @@
+use std;
+
 #[derive(Clone)]
 pub struct Hash {
     hashed: bool,
@@ -54,6 +56,30 @@ impl Hash {
     }
 }
 
+impl PartialEq for Hash {
+    fn eq(&self, other: &Self) -> bool {
+        self.body == other.body
+    }
+}
+
+impl Eq for Hash {}
+
+impl std::hash::Hash for Hash {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        self.body.hash(state);
+    }
+}
+
+impl std::fmt::Display for Hash {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        for byte in &self.body {
+            write!(f, "{:02x}", byte)?;
+        }
+
+        return Ok(());
+    }
+}
+
 pub trait Hashable: Clone {
     fn default() -> Self;
     fn get_id(&self) -> usize;
@@ -61,6 +87,7 @@ pub trait Hashable: Clone {
 }
 
 pub trait Hasher {
-    fn new() -> Self;
+    fn new() -> Self where Self: Sized;
     fn hash(&self, data: &[u8]) -> Hash;
+    fn name(&self) -> String;
 }

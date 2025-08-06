@@ -111,6 +111,10 @@ impl hash::Hasher for TigerHash {
         
         return hash::Hash::from_vec(result_bytes);
     }
+
+    fn name(&self) -> String {
+        return "tiger".to_string();
+    }
 }
 
 #[cfg(test)]

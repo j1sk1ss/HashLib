@@ -209,6 +209,10 @@ impl hash::Hasher for Blake2B {
         context.update(data);
         return hash::Hash::from_vec(context.finalize());
     }
+
+    fn name(&self) -> String {
+        return "blake2b".to_string();
+    }
 }
 
 #[cfg(test)]

@@ -75,6 +75,10 @@ impl hash::Hasher for SHA512 {
         let padded_data = pre_process(data);
         return hash::Hash::from_vec(get_hash(&padded_data));
     }
+
+    fn name(&self) -> String {
+        return "sha512".to_string();
+    }
 }
 
 #[cfg(test)]

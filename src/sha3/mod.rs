@@ -84,6 +84,10 @@ impl hash::Hasher for SHA3 {
         ctx.absorb(data);
         return hash::Hash::from_array(&ctx.finalize());
     }
+
+    fn name(&self) -> String {
+        return "sha3".to_string();
+    }
 }
 
 #[cfg(test)]

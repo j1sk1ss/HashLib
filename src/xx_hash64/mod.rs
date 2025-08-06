@@ -134,6 +134,10 @@ impl hash::Hasher for XXHash64 {
         let hashed = xxh64(&input, self.seed);
         return hash::Hash::from_array(&hashed.to_be_bytes());
     }
+
+    fn name(&self) -> String {
+        return "xxhash64".to_string();
+    }
 }
 
 #[cfg(test)]

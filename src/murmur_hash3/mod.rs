@@ -93,6 +93,10 @@ impl hash::Hasher for MurMurHash3 {
         let hashed = murmur3_x86_32(&input, self.seed);
         return hash::Hash::from_array(&hashed.to_be_bytes());
     }
+
+    fn name(&self) -> String {
+        return "murmur3".to_string();
+    }
 }
 
 #[cfg(test)]

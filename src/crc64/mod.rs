@@ -27,6 +27,10 @@ impl hash::Hasher for CRC64 {
     
         return hash::Hash::from_array(&result);
     }
+
+    fn name(&self) -> String {
+        return "crc64".to_string();
+    }
 }
 
 #[cfg(test)]

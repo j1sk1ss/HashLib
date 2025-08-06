@@ -22,6 +22,10 @@ impl hash::Hasher for CRC16 {
         result[1] = (crc & 0xFF) as u8;
         return hash::Hash::from_array(&result);
     }
+
+    fn name(&self) -> String {
+        return "crc16".to_string();
+    }
 }
 
 #[cfg(test)]
