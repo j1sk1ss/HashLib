@@ -29,11 +29,25 @@ impl Hash {
     }
 
     pub fn from_string(data: &str) -> Hash {
-        return Hash::new(data.len());
+        return Hash {
+            hashed: true,
+            body:   data.as_bytes().to_vec()
+        }
     }
 
     pub fn equals(&self, hash: &Hash) -> bool {
         return self.body == hash.body;
+    }
+
+    pub fn cmp(&self, b: &Hash) -> i64 {
+        let min_len = self.body.len().min(b.body.len());
+        for i in 0..min_len {
+            if self.body[i] != b.body[i] {
+                return (self.body[i] as i64) - (b.body[i] as i64);
+            }
+        }
+    
+        return (self.body.len() as i64) - (b.body.len() as i64);
     }
 
     pub fn concat(&self, hash: &Hash) -> Hash {
