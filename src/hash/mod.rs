@@ -65,6 +65,15 @@ impl Hash {
         return self.body.iter().map(|b| format!("{:02x}", b)).collect::<String>();
     }
 
+    pub fn to_usize(&self) -> usize {
+        let mut bytes = [0u8; 8];
+        for (i, b) in self.body.iter().take(8).enumerate() {
+            bytes[i] = *b;
+        }
+
+        return usize::from_le_bytes(bytes);
+    }
+
     pub fn is_hashed(&self) -> bool {
         return self.hashed;
     }
