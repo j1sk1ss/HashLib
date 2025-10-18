@@ -165,7 +165,7 @@ mod tests {
 
     #[test]
     fn string_tests() -> () {
-        /* https://emn178.github.io/online-tools/crc/ */
+        /* https://asecuritysite.com/encryption/xxhash */
         assert_eq!(get_hash_from_string("Hello world"), "c500b0c912b376d8");
         assert_eq!(get_hash_from_string("Goodbye!"),    "6875643fe7d4bb96");
         assert_eq!(get_hash_from_string("America8765"), "e1145f407c5eb962");

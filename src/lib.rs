@@ -3,6 +3,7 @@
 pub mod crc16;
 pub mod crc32;
 pub mod crc64;
+pub mod xx_hash32;
 pub mod xx_hash64;
 pub mod murmur_hash3;
 
