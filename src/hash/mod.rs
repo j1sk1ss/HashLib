@@ -74,6 +74,10 @@ impl Hash {
         return usize::from_le_bytes(bytes);
     }
 
+    pub fn get_body(self) -> Vec<u8> {
+        return self.body;
+    }
+
     pub fn is_hashed(&self) -> bool {
         return self.hashed;
     }
